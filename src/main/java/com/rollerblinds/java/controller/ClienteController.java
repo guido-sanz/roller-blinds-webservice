@@ -30,8 +30,9 @@ import com.rollerblinds.java.service.PedidoDAOimplt;
 import com.rollerblinds.java.service.dto.ClienteDTO;
 import com.rollerblinds.java.service.dto.PedidoDTO;
 
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
+
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("clientes")
 public class ClienteController {
 	
@@ -148,6 +149,14 @@ public class ClienteController {
 	public void editarPedido(@RequestBody Pedido p ,@PathVariable("id") Integer id) {
 		p.setId(id);
 		pedidoDAO.save(p);
+	}
+	
+	@DeleteMapping(value="/deletePedido/{id}/{cliente}")
+	public void eliminarPedido(@PathVariable("id") Integer id,@PathVariable("cliente") Integer clienteid) {
+		Cliente c = clienteDAO.findById(clienteid).get();
+		Pedido p = pedidoDAO.findById(id).get();
+		c.removePedido(p);
+		clienteDAO.save(c);
 	}
 	
 
