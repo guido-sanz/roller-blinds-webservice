@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.rollerblinds.java.entidades.Cliente;
 import com.rollerblinds.java.entidades.Pedido;
+import com.rollerblinds.java.pedidoImplt.ImplementacionPedido;
 import com.rollerblinds.java.service.ClienteDAO;
 import com.rollerblinds.java.service.ClienteDAOimplt;
 import com.rollerblinds.java.service.PedidoDAO;
@@ -30,9 +31,9 @@ import com.rollerblinds.java.service.PedidoDAOimplt;
 import com.rollerblinds.java.service.dto.ClienteDTO;
 import com.rollerblinds.java.service.dto.PedidoDTO;
 
-
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
+//@CrossOrigin(origins = "*")
 @RestController
-@CrossOrigin(origins = "*")
 @RequestMapping("clientes")
 public class ClienteController {
 	
@@ -47,6 +48,9 @@ public class ClienteController {
 	
 	@Autowired
 	PedidoDAOimplt pedidoDAOimplt;
+	
+	@Autowired
+	ImplementacionPedido pedidoCoti;
 	
 	
 	@GetMapping(value = "/findAll", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -134,6 +138,15 @@ public class ClienteController {
 	public void agregarPedido(@RequestBody Pedido p,@PathVariable("id") Integer id){
 	Cliente c = clienteDAO.findById(id).get();
 	Pedido pedido = new Pedido();
+	
+	double ancho = p.getAncho();
+	double alto = p.getAlto();
+	int cantidad = p.getCantidad();
+	String tela = p.getTela();
+	double precio = pedidoCoti.cotizacion(ancho, alto, cantidad, tela);
+	System.out.println(precio);
+	p.setTotal(precio);
+	
 	pedido = p;
 	c.agregaPedido(pedido);
 	clienteDAO.save(c);

@@ -144,7 +144,8 @@ public class Pedido{
 				+ ", alto=" + alto + ", cantidad=" + cantidad + ", ladoCadena=" + ladoCadena + ", tipoCadena="
 				+ tipoCadena + ", envio=" + envio + ", total=" + total + ", cliente=" + cliente + "]";
 	}
-	
-	
+
+
+
 
 }	
