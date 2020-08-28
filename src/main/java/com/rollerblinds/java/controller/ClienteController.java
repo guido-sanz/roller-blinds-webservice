@@ -31,7 +31,7 @@ import com.rollerblinds.java.service.PedidoDAOimplt;
 import com.rollerblinds.java.service.dto.ClienteDTO;
 import com.rollerblinds.java.service.dto.PedidoDTO;
 
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
+@CrossOrigin(origins = "*")
 //@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("clientes")
